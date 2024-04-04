@@ -17,7 +17,7 @@ class IPLocator:
             hostnames = socket.gethostbyaddr(self.ip_address)
             self.url = hostnames
         except socket.herror as e: 
-            print('Error:', e)
+            #print('Error:', e)
             self.url = e.args[1]
             
     def url_to_ip(self):
@@ -25,7 +25,7 @@ class IPLocator:
             ip_address = socket.gethostbyname(self.url)
             self.ip_address = ip_address
         except socket.error as e:
-            print("Error:", e)
+            #print("Error:", e)
             self.ip_address = e
     
     def is_private_ip(self):
