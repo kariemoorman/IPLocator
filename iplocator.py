@@ -121,4 +121,4 @@ def main():
     locator.get_ip_info()
 
 if __name__ == "__main__":
-    main()f
+    main()
