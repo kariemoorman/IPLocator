@@ -1,5 +1,8 @@
 # IPLocator
-<p align='center'><img src='iplocator.png' alt='iplocator'></p>
+
+<p align='center'><img src='ip_locator.png' alt='iplocator' width='75%'></p>
+
+---
 
 ### Examples
 
