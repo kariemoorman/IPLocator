@@ -53,6 +53,7 @@ class IPLocator:
         output = {
             "ip": self.ip_address,
             "hostname": hostname,
+            "domain_name": self.url,
             "is_private": self.is_private_ip(),
             "org": ip_data.get("org"),
             "city": ip_data.get("city"),
