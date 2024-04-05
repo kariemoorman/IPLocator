@@ -111,10 +111,15 @@ class IPLocator:
         for location in locations:
             city = location['city']
             state = location['state']
+            region = location['region']
             country = location['country']
             latitude = location['latitude']
             longitude = location['longitude']
-        plt.text(longitude, latitude, f'{city}, {state}, {country}',
+        if city and state: 
+            plt.text(longitude, latitude, f'{city}, {state}, {country}',
+                fontsize=8, ha='right', color='white')
+        else: 
+            plt.text(longitude, latitude, f'{region}, {country}',
                 fontsize=8, ha='right', color='white')
         plt.plot(longitude, latitude, 'ro', markersize=5)
         plt.title('IP GeoLocation Map')
