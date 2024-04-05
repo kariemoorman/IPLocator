@@ -45,23 +45,41 @@ class IPLocator:
         except (socket.herror, socket.gaierror):
             hostname = None
         try:
-            response = requests.get(f"https://ipinfo.io/{self.ip_address}/json")
+            # response = requests.get(f"https://ipinfo.io/{self.ip_address}/json")
+            response = requests.get(f"http://ip-api.com/json/{self.ip_address}?fields=58454015")
             ip_data = response.json()
         except requests.RequestException:
             ip_data = {}
 
+        # output = {
+        #     "ip": self.ip_address,
+        #     "hostname": hostname,
+        #     "domain_name": self.url,
+        #     "is_private": self.is_private_ip(),
+        #     "org": ip_data.get("org"),
+        #     "city": ip_data.get("city"),
+        #     "region": ip_data.get("region"),
+        #     "country": ip_data.get("country"),
+        #     "proxy": ip_data.get("proxy"),
+        #     "vpn": ip_data.get("vpn"),
+        #     "residential_proxy": ip_data.get("residential_proxy")
+        # }
         output = {
             "ip": self.ip_address,
-            "hostname": hostname,
-            "domain_name": self.url,
-            "is_private": self.is_private_ip(),
-            "org": ip_data.get("org"),
-            "city": ip_data.get("city"),
-            "region": ip_data.get("region"),
-            "country": ip_data.get("country"),
-            "proxy": ip_data.get("proxy"),
-            "vpn": ip_data.get("vpn"),
-            "residential_proxy": ip_data.get("residential_proxy")
+             "hostname": hostname,
+             'domain_name': self.url,
+             "isp": ip_data.get("isp"),
+             "org": ip_data.get("org"),
+             "asin": ip_data.get("as"),
+             "proxy": ip_data.get("proxy"),
+             "hosting": ip_data.get("hosting"),
+             "mobile": ip_data.get("mobile"),
+             "is_private": self.is_private_ip(),
+             "continent_code": ip_data.get("continentCode"),
+             "region": ip_data.get("regionName"),
+             "district": ip_data.get("district"),
+             "zip_code": ip_data.get("zip"),
+             "timezone": ip_data.get("timezone")
         }
         return output
     
