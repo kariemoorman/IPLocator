@@ -23,9 +23,13 @@ cd IPLocator && python -m venv .venv
 ```
 source .venv/bin/activate
 ```
-- Install Dependencies
+- Install Dependencies.
 ```
 pip install geoip2 geopandas matplotlib
+```
+- Download GeoLite2-City database (GeoLite2-City.mmdb.gz).
+```
+https://github.com/mbcc2006/GeoLiteCity-data?tab=readme-ov-file
 ```
 - Run IPLocator program.
 ```
