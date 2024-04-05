@@ -4,7 +4,10 @@ import requests
 import ipaddress
 import json
 import geoip2.database
-
+import geopandas as gpd
+import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('TkAgg')
 
 class IPLocator:
     def __init__(self, url=False, ip_address=False, database='GeoLite2-City.mmdb'):
@@ -99,6 +102,25 @@ class IPLocator:
                 return output
             except geoip2.errors.AddressNotFoundError:
                 return None
+                
+    def worldmap_results(self, locations):
+        world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
+        fig, ax = plt.subplots(figsize=(10, 5))
+        world.plot(ax=ax, color='#383838', edgecolor='#282828')
+        ax.set_facecolor('#101010')
+        for location in locations:
+            city = location['city']
+            state = location['state']
+            country = location['country']
+            latitude = location['latitude']
+            longitude = location['longitude']
+        plt.text(longitude, latitude, f'{city}, {state}, {country}',
+                fontsize=8, ha='right', color='white')
+        plt.plot(longitude, latitude, 'ro', markersize=5)
+        plt.title('IP GeoLocation Map')
+        plt.xlabel('Longitude')
+        plt.ylabel('Latitude')
+        plt.show()
             
     def get_ip_info(self):
         location_data = self.get_location()
@@ -107,7 +129,7 @@ class IPLocator:
         for key, value in location_data.items():
             type_data[key] = value
         print(json.dumps(type_data, indent=4))
-        
+        self.worldmap_results([type_data])
 
 def main():
     parser = argparse.ArgumentParser(description="IP Location Finder")
