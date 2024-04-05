@@ -9,9 +9,35 @@ Use IPLocator to extract metadata including geolocation information from domain 
 
 ---
 
+### Installation 
+
+- Clone or download .zip of IPLocator python package.
+```
+git clone https://github.com/kariemoorman/IPLocator.git
+```
+- Create a virtual environment.
+```
+cd IPLocator && python -m venv .venv 
+```
+- Activate virtual environment.
+```
+source .venv/bin/activate
+```
+- Install Dependencies
+```
+pip install geoip2 geopandas matplotlib
+```
+- Run IPLocator program.
+```
+python iplocator.py --ip <ip_address>
+python iplocator.py --url <domain_name>
+```
+
+---
+
 ### Examples
 
-#### Search by IP Address
+- #### Search by IP Address
 ```
  python iplocator.py --ip 185.46.85.45
 ```
@@ -49,7 +75,7 @@ Use IPLocator to extract metadata including geolocation information from domain 
 }
 ```
 
-#### Search by URL
+- #### Search by URL
 ```
 python iplocator.py --url www.tiktok.com
 ```
