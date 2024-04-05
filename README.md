@@ -41,7 +41,7 @@
 python iplocator.py -u www.tiktok.com
 ```
 
-<p><img src='ip-tt.png' alt='tiktok-geolocation'></p>
+<p><img src='ip_tt.png' alt='tiktok-geolocation'></p>
 
 ```
 {
