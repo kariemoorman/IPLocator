@@ -9,7 +9,10 @@
 #### Search by IP Address
 ```
  python iplocator.py --ip 185.46.85.45
+```
+<p><img src='ip-ru.png' alt='ru-geolocation'></p>
 
+```
 {
     "ip": "185.46.85.45",
     "hostname": null,
@@ -36,7 +39,11 @@
 #### Search by URL
 ```
 python iplocator.py -u www.tiktok.com
+```
 
+<p><img src='ip-tt.png' alt='tiktok-geolocation'></p>
+
+```
 {
     "ip": "184.29.143.179",
     "hostname": "a184-29-143-179.deploy.static.akamaitechnologies.com",
