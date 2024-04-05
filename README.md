@@ -1,6 +1,11 @@
 # IPLocator
 
 <p align='center'><img src='ip_locator.png' alt='iplocator' width='75%'></p>
+<br>
+
+### Description
+
+Use IPLocator to extract metadata including geolocation information from domain names and IPv4 addresses.
 
 ---
 
@@ -16,6 +21,7 @@
 {
     "ip": "185.46.85.45",
     "hostname": null,
+    "domain_name": "Unknown host",
     "is_private": false,
     "org": "AS35624 Silverstar Invest Limited",
     "city": null,
@@ -38,7 +44,7 @@
 
 #### Search by URL
 ```
-python iplocator.py -u www.tiktok.com
+python iplocator.py --url www.tiktok.com
 ```
 
 <p><img src='ip_tt.png' alt='tiktok-geolocation'></p>
@@ -47,6 +53,7 @@ python iplocator.py -u www.tiktok.com
 {
     "ip": "184.29.143.179",
     "hostname": "a184-29-143-179.deploy.static.akamaitechnologies.com",
+    "domain_name": "www.tiktok.com",
     "is_private": false,
     "org": "AS20940 Akamai International B.V.",
     "city": "New York",
