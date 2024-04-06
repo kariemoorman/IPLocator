@@ -2,6 +2,9 @@
 
 import argparse
 import socket
+import os
+from datetime import datetime
+import re
 import requests
 import ipaddress
 import json
@@ -16,6 +19,10 @@ class IPLocator:
         self.url = url
         self.ip_address = ip_address 
         self.database = database
+        #Set output_filepath
+        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        ip = re.sub(r'\.', '', self.ip_address)
+        self.output_filepath = f"{ip}_{timestamp}.json"
         
     def ip_to_url(self):
         try: 
@@ -148,7 +155,9 @@ class IPLocator:
         plt.title('IP GeoLocation Map')
         plt.xlabel('Longitude')
         plt.ylabel('Latitude')
-        plt.show()
+        # plt.show()
+        plt.savefig(f"{self.output_filepath}.png", bbox_inches='tight')
+        plt.close()
             
     def get_ip_info(self):
         location_data = self.get_location()
@@ -156,7 +165,11 @@ class IPLocator:
 
         for key, value in location_data.items():
             type_data[key] = value
-        print(json.dumps(type_data, indent=4))
+        
+        with open(self.output_filepath, 'w') as json_file:
+            json.dump(type_data, json_file, indent=4)
+        
+        print(f"\nExtracted text saved to: {self.output_filepath}\n")
         self.worldmap_results([type_data])
 
 def main():
