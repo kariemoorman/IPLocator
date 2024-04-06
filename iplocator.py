@@ -22,7 +22,7 @@ class IPLocator:
         #Set output_filepath
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         ip = re.sub(r'\.', '', self.ip_address)
-        self.output_filepath = f"{ip}_{timestamp}.json"
+        self.output_filepath = f"{ip}_{timestamp}"
         
     def ip_to_url(self):
         try: 
@@ -166,7 +166,7 @@ class IPLocator:
         for key, value in location_data.items():
             type_data[key] = value
         
-        with open(self.output_filepath, 'w') as json_file:
+        with open(f"{self.output_filepath}.json", 'w') as json_file:
             json.dump(type_data, json_file, indent=4)
         
         print(f"\nExtracted text saved to: {self.output_filepath}\n")
