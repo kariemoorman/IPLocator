@@ -168,9 +168,9 @@ class IPLocator:
         
         with open(f"{self.output_filepath}.json", 'w') as json_file:
             json.dump(type_data, json_file, indent=4)
-        
-        print(f"\nExtracted text saved to: {self.output_filepath}\n")
+        print(f"\nExtracted text saved to: {self.output_filepath}.json\n")
         self.worldmap_results([type_data])
+        print(f"\Geolocation image saved to: {self.output_filepath}.png\n")
 
 def main():
     parser = argparse.ArgumentParser(description="IP Location Finder")
