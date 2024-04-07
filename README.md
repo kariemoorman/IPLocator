@@ -3,13 +3,13 @@
 <p align='center'><img src='ip_locator.png' alt='iplocator' width='75%'></p>
 <br>
 
-### Description
+## Description
 
 Use IPLocator to extract metadata including geolocation information from domain names and IPv4 addresses.
 
 ---
 
-### Installation 
+## Installation 
 
 - Clone or download .zip of IPLocator python package.
 ```
@@ -47,9 +47,9 @@ python IPLocator-App/app.py
 
 ---
 
-### Examples
+## Examples
 
-### IPLocator application
+### IPLocator Application
 ```
 python IPLocator-App/app.py
 ```
@@ -57,7 +57,7 @@ python IPLocator-App/app.py
 <p align='center'><img src='IPLocator.gif' alt='IPLocatorFlaskApp'></p>
 
 
-### IPLocator program
+### IPLocator Program
 
 - #### Search by IP Address
 ```
