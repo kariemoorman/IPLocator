@@ -4,7 +4,6 @@ import argparse
 import socket
 import os
 from datetime import datetime
-import re
 import requests
 import ipaddress
 import json
