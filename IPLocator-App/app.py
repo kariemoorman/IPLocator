@@ -29,7 +29,7 @@ def index():
         if locator: 
             ip_info = locator.get_ip_info()
             latitude = ip_info.get('lat')
-            longitude = ip_info.get('lon')
+            longitude = ip_info.get('long')
             
         return render_template('index.html', ip_info=ip_info, latitude=latitude, longitude=longitude, msg=msg)
     return render_template('index.html')
