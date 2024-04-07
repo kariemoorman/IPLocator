@@ -49,6 +49,8 @@ input {
     width: 700px;
     margin: auto;
     position: relative; 
+    display: flex;
+    justify-content: center;
 }
 
 .error-msg-container {
@@ -57,7 +59,7 @@ input {
     display: flex;
     justify-content: center;
     position: absolute; 
-    width: 90%; 
+    width: 80%; 
     top: 100%; 
     background-color: #FDF7DF;
     border: 1px solid #FEEC6F;
