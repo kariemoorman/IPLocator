@@ -74,7 +74,7 @@ class IPLocator:
              "zip_code": ip_data.get("zip"),
              "time_zone": ip_data.get("timezone"),
              "lat": ip_data.get("lat"),
-             "lon": ip_data.get("lon")
+             "long": ip_data.get("lon")
         }
         return output
     
