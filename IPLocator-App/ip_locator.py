@@ -9,6 +9,7 @@ import requests
 import ipaddress
 import json
 import geoip2.database
+from geopy.geocoders import Nominatim
 
 
 class IPLocator:
@@ -45,6 +46,11 @@ class IPLocator:
         except ValueError:
             return False
 
+    def get_address(self, latitude, longitude):
+        geolocator = Nominatim(user_agent="IPLocator-App")
+        location = geolocator.reverse((latitude, longitude))
+        return location.address
+
     def get_ip_type(self):
         try:
             hostnames = socket.gethostbyaddr(self.ip_address)
@@ -56,7 +62,7 @@ class IPLocator:
             ip_data = response.json()
         except requests.RequestException:
             ip_data = {}
-            
+        address = self.get_address(ip_data.get("lat"), ip_data.get("lon"))    
         output = {
             "ip": self.ip_address,
              "hostname": hostname,
@@ -74,7 +80,8 @@ class IPLocator:
              "zip_code": ip_data.get("zip"),
              "time_zone": ip_data.get("timezone"),
              "lat": ip_data.get("lat"),
-             "long": ip_data.get("lon")
+             "long": ip_data.get("lon"),
+             "address": address
         }
         return output
     
@@ -98,6 +105,7 @@ class IPLocator:
                 city = response.city.name
                 latitude = response.location.latitude
                 longitude = response.location.longitude
+                address = self.get_address(latitude, longitude)
                 output = {
                     # 'ip_address': self.ip_address,
                     # 'url': self.url,
@@ -111,7 +119,8 @@ class IPLocator:
                     'area_code': area_code,
                     'postal_code': postal_code,
                     'latitude': latitude,
-                    'longitude': longitude
+                    'longitude': longitude,
+                    'physical_address': address
                     }
                 return output
             except geoip2.errors.AddressNotFoundError:
