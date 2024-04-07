@@ -25,21 +25,39 @@ source .venv/bin/activate
 ```
 - Install Dependencies.
 ```
-pip install geoip2 geopandas matplotlib
+pip install geoip2 geopandas matplotlib flask regex
 ```
 - Download GeoLite2-City database (GeoLite2-City.mmdb.gz).
 ```
 https://github.com/mbcc2006/GeoLiteCity-data?tab=readme-ov-file
+```
+- Decompress and untar database.
+```
+tar -xzvf <database_name>.tar.gz
 ```
 - Run IPLocator program.
 ```
 python iplocator.py --ip <ip_address>
 python iplocator.py --url <domain_name>
 ```
+- Run IPLocator Flask application.
+```
+python IPLocator-App/app.py
+```
 
 ---
 
 ### Examples
+
+### IPLocator application
+```
+python IPLocator-App/app.py
+```
+
+<p align='center'><img src='IPLocator.gif' alt='IPLocatorFlaskApp'></p>
+
+
+### IPLocator program
 
 - #### Search by IP Address
 ```
