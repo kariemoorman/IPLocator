@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPTracker</title>
+    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-panorama/leaflet.panorama.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script>
+        var latitude = {{ latitude }};
+        var longitude = {{ longitude }};
+    </script>
+    <script src="static/map.js"></script>
+</head>
+<body>
+    <h1>📍IP Tracker</h1>
+    <div class="form-container">
+    <form action="/" method="POST" >
+        <label for="ip_or_url">Enter IP Address or URL:</label>
+        <input type="text" id="ip_or_url" name="ip_or_url" placeholder="E.g., 142.250.81.238 or www.example.com">
+        <input type="submit" value="Submit" class="submit-button">
+    </form>
+    <br>
+    {% if msg %}
+    <div class='error-msg-container'><div class='error-msg'>{{ msg }}</div></div>
+    {% endif %}
+    </div>
+    {% if ip_info %}
+    <div class="container">
+        <div class="table-container">
+            
+            <table border="1">
+                <tr>
+                    <th width='120px;'>Attribute</th>
+                    <th width='400px;'>Value</th>
+                </tr>
+                {% for key, value in ip_info.items() %}
+                <tr>
+                    <td>{{ key }}</td>
+                    <td>{{ value }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            
+        </div>
+    
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+    </div>
+    {% endif %}
+</body>
+<footer>
+</footer>
+</html>
