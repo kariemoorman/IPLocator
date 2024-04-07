@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
             iconSize: [20, 31],
             iconAnchor: [12, 41],
             popupAnchor: [1, -34],
-            shadowSize: [41, 41]
+            shadowSize: [31, 31]
         })
     }).addTo(map);
 
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
             iconSize: [20, 31],
             iconAnchor: [12, 41],
             popupAnchor: [1, -34],
-            shadowSize: [41, 41]
+            shadowSize: [31, 31]
         })
     }).addTo(map);
 
