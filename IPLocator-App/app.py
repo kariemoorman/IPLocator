@@ -23,15 +23,17 @@ def index():
                 locator = IPLocator(url=url)
             except socket.gaierror:
                 msg = "🚨 Please Enter a Valid IP Addres or Domain Name. 🚨"
-                ip_info, latitude, longitude = None, None, None
-                return render_template('index.html', ip_info=ip_info, latitude=latitude, longitude=longitude, msg=msg)
+                ip_info, lat, long, latitude, longitude = None, None, None, None, None
+                return render_template('index.html', ip_info=ip_info, lat=lat, long=long, latitude=latitude, longitude=longitude, msg=msg)
         
         if locator: 
             ip_info = locator.get_ip_info()
-            latitude = ip_info.get('lat')
-            longitude = ip_info.get('long')
+            lat = ip_info.get('lat')
+            long = ip_info.get('long')
+            latitude = ip_info.get('latitude')
+            longitude = ip_info.get('longitude')
             
-        return render_template('index.html', ip_info=ip_info, latitude=latitude, longitude=longitude, msg=msg)
+        return render_template('index.html', ip_info=ip_info, lat=lat, long=long, latitude=latitude, longitude=longitude, msg=msg)
     return render_template('index.html')
 
 if __name__ == '__main__':
