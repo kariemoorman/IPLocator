@@ -22,7 +22,7 @@ def index():
                 url = str(ip_or_url)
                 locator = IPLocator(url=url)
             except socket.gaierror:
-                msg = "🚨 Please Enter a Valid IP Addres or Domain Name. 🚨"
+                msg = "🚨 Please Enter a Valid IP Address or Domain Name. 🚨"
                 ip_info, lat, long, latitude, longitude = None, None, None, None, None
                 return render_template('index.html', ip_info=ip_info, lat=lat, long=long, latitude=latitude, longitude=longitude, msg=msg)
         
