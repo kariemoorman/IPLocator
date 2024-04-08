@@ -44,6 +44,11 @@ python iplocator.py --url <domain_name>
 ```
 python IPLocator-App/app.py
 ```
+- Run Unit Tests.
+```
+cd IPLocator
+python -m unittest tests.app_tests
+```
 
 ---
 
