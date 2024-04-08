@@ -18,6 +18,9 @@ limiter = Limiter(get_remote_address, app=app, storage_uri='redis://localhost:63
 
 @app.errorhandler(429)
 def handle_rate_limit_exceeded(e):
+    '''
+    Rate-Limiting
+    '''
     return jsonify(error="Rate limit exceeded. Please try again later."), 429
 
 @app.after_request
