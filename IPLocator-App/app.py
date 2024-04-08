@@ -6,9 +6,15 @@ import socket
 from ip_locator import IPLocator
 import logging
 
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+from redis import Redis
+
 app = Flask(__name__)
 
 logging.basicConfig(filename='app.log', level=logging.INFO, format='%(asctime)s %(levelname)s: %(message)s')
+redis_client = Redis(host='localhost', port=6379)
+limiter = Limiter(get_remote_address, app=app, storage_uri='redis://localhost:6379', default_limits=["500 per day", "100 per hour", "10 per minute"])
 
 
 @app.route('/', methods=['GET', 'POST'])
