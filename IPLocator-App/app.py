@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import re
 import socket
 from ip_locator import IPLocator
@@ -16,6 +16,27 @@ logging.basicConfig(filename='app.log', level=logging.INFO, format='%(asctime)s 
 redis_client = Redis(host='localhost', port=6379)
 limiter = Limiter(get_remote_address, app=app, storage_uri='redis://localhost:6379', default_limits=["500 per day", "100 per hour", "10 per minute"])
 
+@app.errorhandler(429)
+def handle_rate_limit_exceeded(e):
+    return jsonify(error="Rate limit exceeded. Please try again later."), 429
+
+@app.after_request
+def add_security_headers(response):
+    response.headers['X-XSS-Protection'] = '1; mode=block'
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
+    return response
+
+# @app.after_request
+# def add_csp_header(response):
+#     csp = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:;"
+#     response.headers['Content-Security-Policy'] = csp
+#     return response
+
+@app.after_request
+def add_x_frame_options(response):
+    response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+    return response
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
