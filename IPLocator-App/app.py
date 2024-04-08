@@ -22,9 +22,17 @@ def index():
     logging.info("Incoming request...")
     msg = None
     locator = None
+    
     if request.method == 'POST':
         logging.info(f"Received POST request from IP address: {request.remote_addr}.")
         ip_or_url = request.form['ip_or_url'].strip()
+        
+        if not ip_or_url:
+            logging.error(f"Invalid IP address or domain name provided for: {ip_or_url} from {request.remote_addr}. Status Code: 400.")
+            msg = "🚨 Please Enter a Valid IP Address or Domain Name. 🚨"
+            ip_info, lat, long, latitude, longitude = None, None, None, None, None
+            return render_template('index.html', ip_info=ip_info, lat=lat, long=long, latitude=latitude, longitude=longitude, msg=msg)
+        
         logging.info(f"Classifying input value: {ip_or_url} from {request.remote_addr}.")
         ipv4_pattern = r'^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$'
         if re.match(ipv4_pattern, ip_or_url):
@@ -53,6 +61,7 @@ def index():
             longitude = ip_info.get('longitude')
             
         return render_template('index.html', ip_info=ip_info, lat=lat, long=long, latitude=latitude, longitude=longitude, msg=msg)
+    
     logging.info("Rendering index.html")
     return render_template('index.html')
 
