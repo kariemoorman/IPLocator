@@ -25,7 +25,7 @@ source .venv/bin/activate
 ```
 - Install Dependencies.
 ```
-pip install geoip2 geopandas matplotlib regex geopy flask Flask-Limiter
+pip install geoip2 geopandas matplotlib regex geopy flask Flask-Limiter redis
 ```
 - Download GeoLite2-City database (GeoLite2-City.mmdb.gz).
 ```
