@@ -22,6 +22,9 @@ def handle_rate_limit_exceeded(e):
 
 @app.after_request
 def add_security_headers(response):
+    '''
+    Security Headers: XSS-Protection, MIME-sniffing protection, Strict-Transport-Security (HSTS) protection
+    '''
     response.headers['X-XSS-Protection'] = '1; mode=block'
     response.headers['X-Content-Type-Options'] = 'nosniff'
     response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
@@ -29,12 +32,18 @@ def add_security_headers(response):
 
 @app.after_request
 def add_csp_header(response):
+    '''
+    Content Security Policy
+    '''
     csp = "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.openstreetmap.org https://cdnjs.cloudflare.com https://cdn.rawgit.com https://*.tile.openstreetmap.org https://unpkg.com; style-src 'self' 'unsafe-inline' https://www.openstreetmap.org https://cdnjs.cloudflare.com https://cdn.rawgit.com https://*.tile.openstreetmap.org https://unpkg.com; img-src 'self' data: https://www.openstreetmap.org https://cdn.rawgit.com https://*.tile.openstreetmap.org https://unpkg.com;"
     response.headers['Content-Security-Policy'] = csp
     return response
 
 @app.after_request
 def add_x_frame_options(response):
+    '''
+    Clickjacking Protection
+    '''
     response.headers['X-Frame-Options'] = 'SAMEORIGIN'
     return response
 
