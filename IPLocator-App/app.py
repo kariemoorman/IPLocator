@@ -27,11 +27,11 @@ def add_security_headers(response):
     response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
     return response
 
-# @app.after_request
-# def add_csp_header(response):
-#     csp = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:;"
-#     response.headers['Content-Security-Policy'] = csp
-#     return response
+@app.after_request
+def add_csp_header(response):
+    csp = "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.openstreetmap.org https://cdnjs.cloudflare.com https://cdn.rawgit.com https://*.tile.openstreetmap.org https://unpkg.com; style-src 'self' 'unsafe-inline' https://www.openstreetmap.org https://cdnjs.cloudflare.com https://cdn.rawgit.com https://*.tile.openstreetmap.org https://unpkg.com; img-src 'self' data: https://www.openstreetmap.org https://cdn.rawgit.com https://*.tile.openstreetmap.org https://unpkg.com;"
+    response.headers['Content-Security-Policy'] = csp
+    return response
 
 @app.after_request
 def add_x_frame_options(response):
