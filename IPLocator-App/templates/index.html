@@ -10,15 +10,17 @@
     <script src="https://unpkg.com/leaflet-panorama/leaflet.panorama.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script>
-        var lat = {{ lat }};
-        var long = {{ long }};
-        var latitude = {{ latitude }};
-        var longitude = {{ longitude }};
+        var dc_latitude = {{ dc_latitude }};
+        var dc_longitude = {{ dc_longitude }};
+        var az_latitude = {{ az_latitude }};
+        var az_longitude = {{ az_longitude }};
+        var company_latitude = {{ company_latitude }};
+        var company_longitude = {{ company_longitude }};
     </script>
     <script src="static/map.js"></script>
 </head>
 <body>
-    <h1>📍IP Tracker</h1>
+    <h1 class='title'>📍IP Tracker</h1>
     <div class="form-container">
     <form action="/" method="POST" >
         <label for="ip_or_url">Enter IP Address or URL:</label>
