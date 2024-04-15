@@ -55,7 +55,6 @@ def index():
     logging.info("Incoming request...")
     msg = None
     locator = None
-    
     if request.method == 'POST':
         logging.info(f"Received POST request from IP address: {request.remote_addr}.")
         ip_or_url = request.form['ip_or_url'].strip()
@@ -63,10 +62,10 @@ def index():
         if not ip_or_url:
             logging.error(f"Invalid IP address or domain name provided for: {ip_or_url} from {request.remote_addr}. Status Code: 400.")
             msg = "🚨 Please Enter a Valid IP Address or Domain Name. 🚨"
-            ip_info, lat, long, latitude, longitude = None, None, None, None, None
-            return render_template('index.html', ip_info=ip_info, lat=lat, long=long, latitude=latitude, longitude=longitude, msg=msg)
-        
-        logging.info(f"Classifying input value: {ip_or_url} from {request.remote_addr}.")
+            ip_info, dc_latitude, dc_longitude, az_latitude, az_longitude, company_latitude, company_longitude = None, None, None, None, None, None, None
+            return render_template('index.html', ip_info=ip_info, dc_latitude=dc_latitude, dc_longitude=dc_longitude, az_latitude=az_latitude, az_longitude=az_longitude, company_latitude=company_latitude, company_longitude=company_longitude, msg=msg)
+            
+        logging.info(f"Received input: {ip_or_url}.")
         ipv4_pattern = r'^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$'
         if re.match(ipv4_pattern, ip_or_url):
             logging.info(f"Received valid IPv4 address: {ip_or_url} from {request.remote_addr}.")
@@ -80,21 +79,22 @@ def index():
                 url = str(ip_or_url)
                 locator = IPLocator(url=url)
             except socket.gaierror:
-                logging.error(f"Invalid IP address or domain name provided for: {ip_or_url} from {request.remote_addr}.")
+                logging.error(f"Invalid IP address or domain name provided for: {ip_or_url} from {request.remote_addr}. Status Code: 400.")
                 msg = "🚨 Please Enter a Valid IP Address or Domain Name. 🚨"
-                ip_info, lat, long, latitude, longitude = None, None, None, None, None
-                return render_template('index.html', ip_info=ip_info, lat=lat, long=long, latitude=latitude, longitude=longitude, msg=msg)
+                ip_info, dc_latitude, dc_longitude, az_latitude, az_longitude, company_latitude, company_longitude = None, None, None, None, None, None, None
+                return render_template('index.html', ip_info=ip_info, dc_latitude=dc_latitude, dc_longitude=dc_longitude, az_latitude=az_latitude, az_longitude=az_longitude, company_latitude=company_latitude, company_longitude=company_longitude, msg=msg)
         
         if locator: 
             logging.info("IPLocator object created successfully.")
             ip_info = locator.get_ip_info()
-            lat = ip_info.get('lat')
-            long = ip_info.get('long')
-            latitude = ip_info.get('latitude')
-            longitude = ip_info.get('longitude')
+            dc_latitude = ip_info.get('dc_latitude')
+            dc_longitude = ip_info.get('dc_longitude')
+            az_latitude = ip_info.get('az_latitude')
+            az_longitude = ip_info.get('az_longitude')
+            company_latitude = ip_info.get('company_latitude')
+            company_longitude = ip_info.get('company_longitude')
             
-        return render_template('index.html', ip_info=ip_info, lat=lat, long=long, latitude=latitude, longitude=longitude, msg=msg)
-    
+        return render_template('index.html', ip_info=ip_info, dc_latitude=dc_latitude, dc_longitude=dc_longitude, az_latitude=az_latitude, az_longitude=az_longitude, company_latitude=company_latitude, company_longitude=company_longitude, msg=msg)
     logging.info("Rendering index.html")
     return render_template('index.html')
 
