@@ -13,7 +13,9 @@ Use IPLocator to extract metadata including geolocation information from domain 
 
 ---
 
-## Installation 
+<details>
+<summary><h2>Installation & Use</h2></summary>
+ 
 
 - Clone or download .zip of IPLocator python package.
 ```
@@ -53,6 +55,7 @@ python IPLocator-App/app.py
 cd IPLocator
 python -m unittest tests.app_tests
 ```
+</details>
 
 ---
 
