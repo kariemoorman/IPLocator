@@ -1,20 +1,16 @@
 # IPLocator
 
 <p align='center'><img src='ip_locator.png' alt='iplocator' width='75%'></p>
-<br>
 
-![GitHub last commit](https://img.shields.io/github/last-commit/kariemoorman/IPLocator)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/kariemoorman/IPLocator)
-![GitHub stars](https://img.shields.io/github/stars/kariemoorman/IPLocator?style=social)
 
-## Description
+### Description
 
 Use IPLocator to extract metadata including geolocation information from domain names and IPv4 addresses.
 
 ---
 
 <details>
-<summary><h2>Installation & Use</h2></summary>
+<summary><h3>Installation & Use</h3></summary>
  
 
 - Clone or download .zip of IPLocator python package.
@@ -59,7 +55,7 @@ python -m unittest tests.app_tests
 
 ---
 
-## Examples
+### Examples
 
 ### IPLocator Application
 ```
