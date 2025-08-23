@@ -32,10 +32,18 @@ pip install geoip2 geopandas matplotlib regex geopy flask Flask-Limiter redis
 - Download GeoLite2-City database (GeoLite2-City.mmdb.gz).
 ```
 https://github.com/mbcc2006/GeoLiteCity-data?tab=readme-ov-file
+or 
+https://github.com/P3TERX/GeoLite.mmdb?tab=readme-ov-file
 ```
 - Decompress and untar database.
 ```
 tar -xzvf <database_name>.tar.gz
+```
+- Start Redis server.
+```
+brew services start redis
+or
+redis-server
 ```
 - Run IPLocator program.
 ```
