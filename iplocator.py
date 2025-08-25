@@ -12,17 +12,19 @@ import geoip2.database
 import geopandas as gpd
 import matplotlib.pyplot as plt
 import matplotlib
-matplotlib.use('TkAgg')
+matplotlib.use('Agg')
 
 class IPLocator:
-    def __init__(self, url=False, ip_address=False, database='GeoLite2-City.mmdb'):
+    def __init__(self, url=None, ip_address=None, database='GeoLite2-City.mmdb'):
         self.url = url
         self.ip_address = ip_address 
         self.database = database
-        #Set output_filepath
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        ip = re.sub(r'\.', '', self.ip_address)
-        self.output_filepath = f"{ip}_{timestamp}"
+        ip = re.sub(r'\.', '', self.ip_address or "unknown")
+        if self.ip_address:
+            self.output_filepath = f"{ip}_{timestamp}"
+        else: 
+            self.output_filepath = f"{url}_{timestamp}"
         
     def ip_to_url(self):
         try: 
@@ -134,43 +136,53 @@ class IPLocator:
                 return None
                 
     def worldmap_results(self, locations):
-        world = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
+        world = gpd.read_file('./data/ne_110m_admin_0_countries.shp')
         fig, ax = plt.subplots(figsize=(10, 5))
         world.plot(ax=ax, color='#383838', edgecolor='#282828')
         ax.set_facecolor('#101010')
         for location in locations:
-            city = location['city']
-            state = location['state']
-            region = location['region']
-            country = location['country']
-            latitude = location['latitude']
-            longitude = location['longitude']
-        if city and state: 
-            plt.text(longitude, latitude, f'{city}, {state}, {country}',
-                fontsize=8, ha='right', color='white')
+            city = location.get('city')
+            district = location.get('district')
+            state = location.get('state')
+            region = location.get('region')
+            country = location.get('country')
+            latitude = location.get('lat')
+            longitude = location.get('lon')
+        if city and state:
+            plt.text(longitude, latitude + 1, f'{city}, {state}, {country}',
+                fontsize=6, ha='center', va='bottom', color='white')
+        elif city and region: 
+            plt.text(longitude, latitude + 1, f'{city}, {region}, {country}',
+                fontsize=6, ha='center', va='bottom', color='white')            
+        elif district and state:
+            plt.text(longitude, latitude + 1, f'{district}, {state}, {country}',
+                fontsize=6, ha='center', va='bottom', color='white')
+        elif district and region:
+            plt.text(longitude, latitude + 1, f'{district}, {region}, {country}',
+                fontsize=6, ha='center', va='bottom', color='white')
         else: 
-            plt.text(longitude, latitude, f'{region}, {country}',
-                fontsize=8, ha='right', color='white')
-        plt.plot(longitude, latitude, 'ro', markersize=5)
+            plt.text(longitude, latitude + 1, f'{region}, {country}',
+                fontsize=6, ha='center', va='bottom', color='white')
+        plt.plot(longitude, latitude, 'ro', markersize=3)
         plt.title('IP GeoLocation Map')
         plt.xlabel('Longitude')
         plt.ylabel('Latitude')
-        # plt.show()
         plt.savefig(f"{self.output_filepath}.png", bbox_inches='tight')
         plt.close()
             
     def get_ip_info(self):
         location_data = self.get_location()
         type_data = self.get_ip_type()
-
-        for key, value in location_data.items():
-            type_data[key] = value
-        
+        if location_data:
+            for key, value in location_data.items():
+                type_data[key] = value
+        else:
+            print("[WARNING] Location data could not be retrieved.")
         with open(f"{self.output_filepath}.json", 'w') as json_file:
             json.dump(type_data, json_file, indent=4)
-        print(f"\nExtracted text saved to: {self.output_filepath}.json\n")
+        print(f"\nExtracted text saved to: {self.output_filepath}.json")
         self.worldmap_results([type_data])
-        print(f"\Geolocation image saved to: {self.output_filepath}.png\n")
+        print(f"Geolocation image saved to: {self.output_filepath}.png\n")
 
 def main():
     parser = argparse.ArgumentParser(description="IP Location Finder")
@@ -180,8 +192,14 @@ def main():
     parser.add_argument('--database', type=str, help="Path to GeoLite2 database file", default="GeoLite2-City.mmdb")
     args = parser.parse_args()
     
-    locator = IPLocator(url=args.url, ip_address=args.ip, database=args.database)
-    locator.get_ip_info()
+    try:
+        locator = IPLocator(url=args.url, ip_address=args.ip, database=args.database)
+        locator.get_ip_info()
+    except FileNotFoundError as e:
+        print(f"[ERROR] Database file not found: {e}")
+        sys.exit(1)
+    except Exception as e:
+        print(f"[WARNING] Primary lookup failed: {e}")
 
 if __name__ == "__main__":
     main()
