@@ -3,6 +3,7 @@
 import argparse
 import socket
 import os
+import sys
 from datetime import datetime
 import re
 import requests
@@ -15,7 +16,7 @@ import matplotlib
 matplotlib.use('Agg')
 
 class IPLocator:
-    def __init__(self, url=None, ip_address=None, database='GeoLite2-City.mmdb'):
+    def __init__(self, url=None, ip_address=None, database='./IPLocator-App/src/GeoLite2-City.mmdb'):
         self.url = url
         self.ip_address = ip_address 
         self.database = database
@@ -136,7 +137,7 @@ class IPLocator:
                 return None
                 
     def worldmap_results(self, locations):
-        world = gpd.read_file('./data/ne_110m_admin_0_countries.shp')
+        world = gpd.read_file('./ne_data/ne_110m_admin_0_countries.shp')
         fig, ax = plt.subplots(figsize=(10, 5))
         world.plot(ax=ax, color='#383838', edgecolor='#282828')
         ax.set_facecolor('#101010')
@@ -189,7 +190,7 @@ def main():
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('--url', '-u', type=str, help="URL")
     group.add_argument('--ip', '-i', type=str, help="IP Address")
-    parser.add_argument('--database', type=str, help="Path to GeoLite2 database file", default="GeoLite2-City.mmdb")
+    parser.add_argument('--database', type=str, help="Path to GeoLite2 database file", default="./IPLocator-App/src/GeoLite2-City.mmdb")
     args = parser.parse_args()
     
     try:

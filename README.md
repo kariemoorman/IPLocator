@@ -1,6 +1,6 @@
 # IPLocator
 
-<p align='center'><img src='ip_locator.png' alt='iplocator' width='75%'></p>
+<p align='center'><img src='example/images/ip_locator.png' alt='iplocator' width='75%'></p>
 
 
 ### Description
@@ -10,76 +10,91 @@ Use IPLocator to extract metadata including geolocation information from domain 
 ---
 
 <details>
-<summary><h3>Installation & Use</h3></summary>
+<summary><h2>Installation & Use</h2></summary>
  
+ <h3>Installation</h3>
 
 - Clone or download .zip of IPLocator python package.
 ```
 git clone https://github.com/kariemoorman/IPLocator.git
 ```
-- Create a virtual environment.
+- Create and activate a virtual environment.
 ```
-cd IPLocator && python -m venv .venv 
-```
-- Activate virtual environment.
-```
-source .venv/bin/activate
+cd IPLocator && python -m venv .iploc-venv && source .iploc-venv/bin/activate
 ```
 - Install Dependencies.
 ```
-pip install geoip2 geopandas matplotlib regex geopy flask Flask-Limiter redis
+pip install -r requirements.txt
 ```
-- Download GeoLite2-City database (GeoLite2-City.mmdb.gz).
-```
-https://github.com/mbcc2006/GeoLiteCity-data?tab=readme-ov-file
-or 
-https://github.com/P3TERX/GeoLite.mmdb?tab=readme-ov-file
-```
-- Decompress and untar database.
-```
-tar -xzvf <database_name>.tar.gz
-```
+
+<h3>Uses</h3>
+
+<h4>IPLocator Program</h4>
+
 - Start Redis server.
 ```
 brew services start redis
 or
 redis-server
 ```
-- Run IPLocator program.
+
+- Run IPLocator CLI. 
 ```
 python iplocator.py --ip <ip_address>
 python iplocator.py --url <domain_name>
+```
+
+<h4>IPLocator Flask Application</h4>
+
+- Start Redis server.
+```
+brew services start redis
+or
+redis-server
 ```
 - Run IPLocator Flask application.
 ```
 python IPLocator-App/app.py
 ```
-- Run Unit Tests.
+
+<h4>IPLocater Flask Application as Docker Container</h4>
+
+- Build & deploy IPLocator application.
 ```
-cd IPLocator
-python -m unittest tests.app_tests
+docker-compose up --build
+```
+- Check logs.
+```
+docker logs -f iplocator-local
+```
+- Stop & remove services. 
+```
+docker-compose down
 ```
 </details>
 
+<br>
+
 ---
 
-### Examples
+<h2>Examples</h2>
 
-### IPLocator Application
+<h3>IPLocator Application</h3>
+
 ```
 python IPLocator-App/app.py
 ```
 
-<p align='center'><img src='IPLocator.gif' alt='IPLocatorFlaskApp'></p>
+<p align='center'><img src='example/images/IPLocator.gif' alt='IPLocatorFlaskApp'></p>
 
 
-### IPLocator Program
+<h3>IPLocator Program</h3>
 
 - #### Search by IP Address
 ```
  python iplocator.py --ip 185.46.85.45
 ```
-<p><img src='ip-ru.png' alt='ru-geolocation'></p>
+<p><img src='example/images/ip-ru.png' alt='ru-geolocation'></p>
 
 ```
 {
@@ -118,7 +133,7 @@ python IPLocator-App/app.py
 python iplocator.py --url www.tiktok.com
 ```
 
-<p><img src='ip_tt.png' alt='tiktok-geolocation'></p>
+<p><img src='example/images/ip_tt.png' alt='tiktok-geolocation'></p>
 
 ```
 {

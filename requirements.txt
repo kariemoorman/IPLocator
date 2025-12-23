@@ -1,0 +1,8 @@
+requests
+geoip2
+geopandas
+geopy
+flask
+flask-limiter
+matplotlib
+redis

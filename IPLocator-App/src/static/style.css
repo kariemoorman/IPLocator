@@ -1,0 +1,126 @@
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+h1, h2, h3 {
+    font-family: 'Arial', sans-serif; 
+}
+
+body {
+    background-color: black;
+    color: white;
+    margin: 10px;
+}
+
+footer {
+    margin-top: 50px;
+}
+
+table {
+    color: white;
+    border: 1px solid white;
+    border-collapse: collapse;
+}
+
+table td {
+    border: 1px solid white;
+    padding: 0 5px;
+}
+
+form {
+    display: flex;
+    align-items: center;
+}
+
+form label {
+    margin: 10px;
+    font-size: large;
+}
+
+input {
+    height: 22px;
+    margin: 0 5px;
+}
+
+.submit-button {
+    height: 27px;
+    width: 70px;
+}
+
+.form-container {
+    width: 700px;
+    margin: auto;
+    position: relative; 
+    display: flex;
+    justify-content: center;
+}
+
+.error-msg-container {
+    margin-top: 10px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    position: absolute; 
+    width: 80%; 
+    top: 100%; 
+    background-color: #FDF7DF;
+    border: 1px solid #FEEC6F;
+    color: #C9971C;
+    border-radius: 5px;
+}
+
+.error-msg {
+    margin: 10px 20px;
+}
+
+#ip_or_url {
+    width: 300px;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+    padding: 20px 10px;
+    border: 1px white solid;
+    background-color: rgba(255, 255, 255, 0.791);
+}
+
+.table-container {
+    flex: 1;
+    margin: 0 10px;
+    background-color: black;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 15px 0 rgba(0,0,0,0.19);
+}
+
+.map-container {
+    flex: 1;
+    margin: 0 10px;
+    width: 100%;
+    border: 1px white solid;
+    align-self: stretch;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 15px 0 rgba(0,0,0,0.19);
+}
+
+#map {
+    height: 100%;
+    filter: invert(1) hue-rotate(180deg) grayscale(0.7);
+}
+
+.title {
+    padding-top: 10px;
+    padding-left: 5px;
+}
+
+/* .ip-table {
+    color: white;
+    border: 1px solid white;
+    border-collapse: collapse; 
+}
+
+.ip-table th,
+.ip-table td {
+    border: 1px solid white;
+    padding-left: 5px;
+    padding-right: 5px;
+} */
