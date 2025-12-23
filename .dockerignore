@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Env & build
+.env
+.venv/
+env/
+build/
+dist/
+
+# OS clutter
+.DS_Store
+
+# Git
+.git
+.gitignore
+
+# Tests (optional)
+IPLocator-App/tests/
+
+# IDE
+.vscode/
+.idea/
