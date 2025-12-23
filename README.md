@@ -29,14 +29,7 @@ pip install -r requirements.txt
 
 <h3>Uses</h3>
 
-<h4>IPLocator Program</h4>
-
-- Start Redis server.
-```
-brew services start redis
-or
-redis-server
-```
+<h4>IPLocator CLI</h4>
 
 - Run IPLocator CLI. 
 ```
