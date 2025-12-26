@@ -66,7 +66,6 @@ docker-compose down
 ```
 </details>
 
-<br>
 
 ---
 
