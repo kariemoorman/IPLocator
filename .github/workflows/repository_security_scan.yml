@@ -45,7 +45,7 @@ on:
         description: 'Comma-separated list of languages to scan'
         required: true
         type: string
-        default: 'python,c'
+        default: 'python,javascript,c'
       ref:
         description: 'Git ref to scan'
         required: false
