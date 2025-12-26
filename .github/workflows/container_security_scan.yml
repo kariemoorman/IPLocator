@@ -1,0 +1,156 @@
+name: "Docker Vulnerability Scan"
+description: "Vulnerability testing for docker image and container"
+
+on:
+  # push:
+  #   branches: [main, master]
+    
+  # pull_request:
+  #   types:
+  #     [opened, synchronize, reopened]
+      
+  # schedule:
+  #   - cron: "0 0 * * *"
+    
+  workflow_dispatch:
+    inputs:
+      run_trivy_scan:
+        description: "Whether to run Trivy scan"
+        required: true
+        type: boolean
+        default: true
+      run_snyk_scan:
+        description: "Whether to run Snyk scan"
+        required: true
+        type: boolean
+        default: true
+      run_grype_scan:
+        description: "Whether to run Grype scan"
+        required: true
+        type: boolean
+        default: true
+      run_jfrog_scan:
+        description: "Whether to run JFrog CLI scan"
+        required: false
+        type: boolean
+        default: false
+      run_owasp_scan:
+        description: "Whether to run OWASP scan"
+        required: true
+        type: boolean
+        default: true
+      ref:
+        description: 'Git ref to scan'
+        required: false
+        type: string
+        default: 'main'
+      image-name:
+        description: 'Name of Docker Image'
+        required: true
+        type: string
+        default: 'my-app'
+      dockerfile-path:
+        description: "Filepath to Dockerfile"
+        required: false
+        type: string
+        default: "./Dockerfile"
+      context-path:
+        description: "Directory to send to the Docker daemon"
+        required: false
+        type: string
+        default: "./"
+      snyk-severity-threshold:
+        description: "Severity threshold for Snyk scan"
+        required: false
+        type: string
+        default: "high"
+      fail-on-critical:
+        description: "Whether to fail on detected critical vulnerability"
+        required: false
+        type: boolean
+        default: true
+      post-pr-comment:
+        description: "Whether to post results as PR comment"
+        required: false
+        type: boolean
+        default: true
+      scan-type:
+        description: "Type of ZAP scan: 'baseline' or 'full'"
+        required: true
+        type: string
+        default: "baseline"
+      jf-url:
+        description: 'JFrog URL'
+        required: false
+        type: string
+      jf-oidc-provider:
+        description: 'JFrog OIDC Provider name'
+        required: false
+        type: string
+      jf-project-key:
+        description: 'JFrog Project key'
+        required: false
+        type: string
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+  id-token: write
+
+jobs:
+  manual-security-scan:
+    if: github.event_name == 'workflow_dispatch'
+    uses: bitwise-technologies/github-actions/.github/workflows/container_security_scan.yml@main
+    with:
+      ref: ${{ inputs.ref }}
+      run_trivy_scan: ${{ inputs.run_trivy_scan }}
+      run_snyk_scan: ${{ inputs.run_snyk_scan }}
+      run_owasp_scan: ${{ inputs.run_owasp_scan }}
+      run_grype_scan: ${{ inputs.run_grype_scan }}
+      run_jfrog_scan: ${{ inputs.run_jfrog_scan }}
+      dockerfile-path: ${{ inputs.dockerfile-path }}
+      context-path: ${{ inputs.context-path }}
+      image-name: ${{ inputs.image-name }}
+      snyk-severity-threshold: ${{ inputs.snyk-severity-threshold }}
+      fail-on-critical: ${{ inputs.fail-on-critical }}
+      post-pr-comment: ${{ inputs.post-pr-comment }}
+      scan-type: ${{ inputs.scan-type }}
+      docker-build-run-cmd: ${{ inputs.docker-build-run-cmd }}
+      docker-stop-rm-cmd: ${{ inputs.docker-stop-rm-cmd }}
+      jf-url: ${{ inputs.jf-url || vars.JFROG_URL }}
+      jf-oidc-provider: ${{ inputs.jf-oidc-provider || vars.JFROG_OIDC_PROVIDER }}
+      jf-project-key: ${{ inputs.jf-project-key || vars.JFROG_PROJECT_KEY }}
+    secrets:
+      github-token: ${{ secrets.GITHUB_TOKEN }}
+      snyk-token: ${{ secrets.SNYK_TOKEN }}
+
+
+  automated-security-scan:
+    if: github.event_name != 'workflow_dispatch'
+    uses: bitwise-technologies/github-actions/.github/workflows/container_security_scan.yml@main
+    with:
+      run_trivy_scan: true
+      run_snyk_scan: true
+      run_owasp_scan: true
+      run_grype_scan: true
+      run_jfrog_scan: false
+      dockerfile-path: './Dockerfile'
+      context-path: './'
+      image-name: 'my-app'
+      snyk-severity-threshold: 'high'
+      fail-on-critical: true
+      post-pr-comment: true
+      ref: ${{ github.ref }}
+      scan-type: 'baseline'
+      docker-build-run-cmd: "docker build -t my-app -f ./Dockerfile . --debug && docker run -d --name my-app -p 127.0.0.1:8000:8000 my-app:local"
+      docker-stop-rm-cmd: "docker stop my-app && docker rm -f my-app"
+      # jf-url: ${{ vars.JFROG_URL }}
+      # jf-oidc-provider: ${{ vars.JFROG_OIDC_PROVIDER }}
+      # jf-project-key: ${{ vars.JFROG_PROJECT_KEY }}
+    secrets:
+      github-token: ${{ secrets.GITHUB_TOKEN }}
+      snyk-token: ${{ secrets.SNYK_TOKEN }}
