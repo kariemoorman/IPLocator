@@ -48,17 +48,17 @@ on:
         description: 'Name of Docker Image'
         required: true
         type: string
-        default: 'my-app'
+        default: 'iplocator-app'
       dockerfile-path:
         description: "Filepath to Dockerfile"
         required: false
         type: string
-        default: "./Dockerfile"
+        default: "Dockerfile"
       context-path:
         description: "Directory to send to the Docker daemon"
         required: false
         type: string
-        default: "./"
+        default: "."
       docker-build-run-cmd:
         description: "Manual command for building Docker image and running Docker container"
         required: false 
