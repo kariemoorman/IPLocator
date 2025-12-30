@@ -53,7 +53,7 @@ on:
         description: "Filepath to Dockerfile"
         required: false
         type: string
-        default: "Dockerfile"
+        default: "./Dockerfile"
       context-path:
         description: "Directory to send to the Docker daemon"
         required: false
@@ -63,12 +63,12 @@ on:
         description: "Manual command for building Docker image and running Docker container"
         required: false 
         type: string
-        default: "docker build -t my-app -f ./Dockerfile . --debug && docker run -d --name my-app -p 127.0.0.1:8000:8000 my-app:local"
+        default: "docker build -t iplocator-app -f ./Dockerfile . --debug && docker run -d --name iplocator-app -p 127.0.0.1:8000:8000 iplocator-app:local"
       docker-stop-rm-cmd:
         description: "Manual command for stopping Docker container and removing Docker image"
         required: false
         type: string
-        default: "docker stop my-app && docker rm -f my-app"
+        default: "docker stop iplocator-app && docker rm -f iplocator-app"
       snyk-severity-threshold:
         description: "Severity threshold for Snyk scan"
         required: false
