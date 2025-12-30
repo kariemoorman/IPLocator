@@ -59,6 +59,16 @@ on:
         required: false
         type: string
         default: "./"
+      docker-build-run-cmd:
+        description: "Manual command for building Docker image and running Docker container"
+        required: false 
+        type: string
+        default: "docker build -t my-app -f ./Dockerfile . --debug && docker run -d --name my-app -p 127.0.0.1:8000:8000 my-app:local"
+      docker-stop-rm-cmd:
+        description: "Manual command for stopping Docker container and removing Docker image"
+        required: false
+        type: string
+        default: "docker stop my-app && docker rm -f my-app"
       snyk-severity-threshold:
         description: "Severity threshold for Snyk scan"
         required: false
